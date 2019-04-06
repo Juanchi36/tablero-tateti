@@ -91,7 +91,7 @@ class TatetiTwoPlayers
             $this->board->draw($x, $y, $this->activePlayer->getMark());
             $this->board->show();
             //$this->board->isFull();
-            self::areWinner();
+            $this->areWinner();
             if($this->activePlayer == $this->players[0]){
                 $this->activePlayer = $this->players[1];
             }else{
@@ -107,28 +107,35 @@ class TatetiTwoPlayers
     }
     public function areWinner()
     {
-        if($this->board->isFull()){
+        $full = $this->board->isFull();
+        if($full){
             echo 'Empate';
-            self::stop();
+            //self::stop();
         }
+        //var_dump($this->board->getBoard());die;
+
         $array = $this->board->getBoard();
         foreach($array as $v){
             if($v[0] != '-' && $v[0] == $v[1] && $v[0] == $v[2]){
                 echo 'Ganó ' . $this->activePlayer->getName() . '<br>';
-                self::stop();
+                //self::stop();
+                $this->stop();
             }
         }
         if($array[0][0] != '-' && $array[0][0] == $array[1][0] && $array[0][0] == $array[2][0]){
             echo 'Ganó ' . $this->activePlayer->getName() . '<br>';
-                self::stop();
+                //self::stop();
+                $this->stop();
         }
         if($array[0][1] != '-' && $array[0][1] == $array[1][1] && $array[0][1] == $array[2][1]){
             echo 'Ganó ' . $this->activePlayer->getName() . '<br>';
-                self::stop();
+                //self::stop();
+                $this->stop();
         }
         if($array[0][2] != '-' && $array[0][2] == $array[1][2] && $array[0][2] == $array[2][2]){
             echo 'Ganó ' . $this->activePlayer->getName() . '<br>';
-                self::stop();
+                //self::stop();
+                $this->stop();
         }
     }
     public function stop()
@@ -143,16 +150,28 @@ $board = new Board(3, 3);
 $player1 = new Player('Pepe', 'X');
 $player2 = new Player('Cacho', 'O');
 $tateti = new TatetiTwoPlayers($player1, $player2, $board);
-$tateti->play(0, 0);
+
+// Chequea empate
+
+/* $tateti->play(0, 0);
 $tateti->play(0, 1);
 $tateti->play(1, 0);
 $tateti->play(1, 1);
 $tateti->play(0, 2);
-$tateti->play(1, 2);
-$tateti->play(2, 1);
 $tateti->play(2, 0);
+$tateti->play(2, 1);
+$tateti->play(1, 2);
 $tateti->play(2, 2);
+ */
 
+//Gana jugador1
+
+$tateti->play(0, 0);
+$tateti->play(1, 0);
+$tateti->play(0, 1);
+$tateti->play(2, 0);
+$tateti->play(0, 2);
+$tateti->play(1, 1);
 
 
 
