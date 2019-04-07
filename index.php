@@ -146,6 +146,75 @@ class TatetiTwoPlayers
 
 }
 
+class BatlleShipTwoPlayers
+{
+    private $boards = [];
+    private $players = [];
+    private $turn = false;
+
+    public function __construct(Player $player1, Player $player2,Board $board1, Board $board2)
+    {
+        $this->players[0] = $player1;
+        $this->players[1] = $player2;
+        $this->boards[0] = $board1;
+        $this->boards[1] = $board2;
+        /* $this->turn[0] = $player1;
+        $this->turn[0] = $player2; */
+
+
+    }
+    public function play($positionX, $positionY)
+    {   
+        
+        if(!$this->turn){
+            $position = $this->boards[1]->giveMePosition($positionX, $positionY);
+            $mark = $this->players[1]->getMark();
+            if($position == $mark){
+                $this->boards[1]->draw($positionX, $positionY, '-');
+                echo 'Tocado <br>';
+            }else{
+                echo 'Agua <br>';
+            }
+            $this->turn = true;
+            
+        }elseif($this->turn){
+            $position = $this->boards[0]->giveMePosition($positionX, $positionY);
+            $mark = $this->players[0]->getMark();
+            if($position == $mark){
+                $this->boards[0]->draw($positionX, $positionY, '-');
+                echo 'Tocado <br>';
+            }else{
+                echo 'Agua <br>';
+            }
+            $this->turn = false;
+        }
+        
+
+    }
+    public function areWinner()
+    {
+
+    }
+    public function shipPlayer1($positionX, $positionY)
+    {
+        if($this->boards[0]->giveMePosition($positionX, $positionY) == '-'){
+            $this->boards[0]->draw($positionX, $positionY, $this->players[0]->getMark());
+        }else{
+            echo 'La posición no está disponible <br>';
+        }
+    }
+    public function shipPlayer2($positionX, $positionY)
+    {
+        if($this->boards[1]->giveMePosition($positionX, $positionY) == '-'){
+            $this->boards[1]->draw($positionX, $positionY, $this->players[1]->getMark());
+        }else{
+            echo 'La posición no está disponible <br>';
+        }
+        
+    }
+
+}
+
 $board = new Board(3, 3);
 $player1 = new Player('Pepe', 'X');
 $player2 = new Player('Cacho', 'O');
@@ -166,14 +235,40 @@ $tateti->play(2, 2);
 
 //Gana jugador1
 
-$tateti->play(0, 0);
+/* $tateti->play(0, 0);
 $tateti->play(1, 0);
 $tateti->play(0, 1);
-$tateti->play(2, 0);
+$tateti->play(2, 0); 
 $tateti->play(0, 2);
-$tateti->play(1, 1);
+$tateti->play(1, 1); */
+
+$board1 = new Board(10, 10);
+$board2 = new Board(10, 10);
+$batlle = new BatlleShipTwoPlayers($player1, $player2, $board1, $board2);
+//$board2->show();die;
+$batlle->shipPlayer1(0, 0);
+$batlle->shipPlayer1(0, 1);
+$batlle->shipPlayer1(0, 2);
+$batlle->shipPlayer1(0, 3);
+$batlle->shipPlayer2(1, 0);
+$batlle->shipPlayer2(1, 1);
+$batlle->shipPlayer2(1, 2);
+$batlle->shipPlayer2(1, 3);
+$board1->show();
+$board2->show();
+
+$batlle->play(1, 1);
+
+$board1->show();
+$board2->show();
+
+$batlle->play(0, 3);
+
+$board1->show();
+$board2->show();
 
 
+//var_dump($batlle);
 
 
 
