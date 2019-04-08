@@ -172,6 +172,7 @@ class BatlleShipTwoPlayers
             if($position == $mark){
                 $this->boards[1]->draw($positionX, $positionY, '-');
                 echo 'Tocado <br>';
+                $this->areWinner();
             }else{
                 echo 'Agua <br>';
             }
@@ -183,6 +184,7 @@ class BatlleShipTwoPlayers
             if($position == $mark){
                 $this->boards[0]->draw($positionX, $positionY, '-');
                 echo 'Tocado <br>';
+                $this->areWinner();
             }else{
                 echo 'Agua <br>';
             }
@@ -193,7 +195,36 @@ class BatlleShipTwoPlayers
     }
     public function areWinner()
     {
-
+        $i = 0;
+        $j = 0;
+        $k = 0;
+        $l = 0;
+        $board1 = $this->boards[0]->getBoard();
+        $board2 = $this->boards[1]->getBoard();
+        foreach($board1 as $files){
+            global $i;
+            global $j;
+            $i++;
+            $j += count(array_unique($files));
+            foreach($files as $value){
+               
+            }
+        }
+        if($i == $j){
+            echo 'Gano ' . $this->players[1]->getName() . '<br>';
+        }
+        foreach($board2 as $files){
+            global $k;
+            global $l;
+            $k++;
+            $l += count(array_unique($files));
+            foreach($files as $value){
+               
+            }
+        }
+        if($k == $l){
+            echo 'Gano ' . $this->players[0]->getName() . '<br>';
+        }
     }
     public function shipPlayer1($positionX, $positionY)
     {
@@ -245,7 +276,6 @@ $tateti->play(1, 1); */
 $board1 = new Board(10, 10);
 $board2 = new Board(10, 10);
 $batlle = new BatlleShipTwoPlayers($player1, $player2, $board1, $board2);
-//$board2->show();die;
 $batlle->shipPlayer1(0, 0);
 $batlle->shipPlayer1(0, 1);
 $batlle->shipPlayer1(0, 2);
@@ -257,7 +287,7 @@ $batlle->shipPlayer2(1, 3);
 $board1->show();
 $board2->show();
 
-$batlle->play(1, 1);
+$batlle->play(1, 0);
 
 $board1->show();
 $board2->show();
@@ -269,6 +299,7 @@ $board2->show();
 
 
 //var_dump($batlle);
+
 
 
 
